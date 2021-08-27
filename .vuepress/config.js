@@ -5,6 +5,7 @@ const directory = require('../directory.json')
 const version = process.env.VERSION
 const prefixEN = `/docs/en/${version ? `${version}/` : ''}`
 const prefixZH = `/docs/zh/${version ? `${version}/` : ''}`
+const publicPath = 'https://hstream-static.emqx.com/'
 
 const { removePlugin, PLUGINS } = require('@vuepress/markdown')
 const fs = require('fs')
@@ -26,6 +27,7 @@ module.exports = {
     ['meta', { property: 'og:url', content: 'https://hstream.io/' }],
     ['meta', { property: 'og:title', content: 'HStreamDB Docs' }],
     ['meta', { property: 'og:image', content: 'https://hstream.io/logo-512.png' }],
+    ['link', { rel: 'stylesheet', href: '//at.alicdn.com/t/font_2772539_63p53p0bt9.css' }],
   ],
   plugins: [
     [
@@ -189,36 +191,44 @@ module.exports = {
     },
   },
   configureWebpack: (config, isServer) => {
-    config.module.rules[4] = {
-      test: /\.(png|jpe?g|gif)(\?.*)?$/,
-      use: [
-        {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            name: 'docs-assets/img/[name].[hash:8].[ext]',
+    if (process.env.NODE_ENV === 'production') {
+      config.module.rules[4] = {
+        test: /\.(png|jpe?g|gif)(\?.*)?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'docs-assets/img/[name].[hash:8].[ext]',
+              publicPath,
+            },
           },
-        },
-      ],
-    }
-    config.module.rules[5] = {
-      test: /\.(svg)(\?.*)?$/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: { name: 'docs-assets/img/[name].[hash:8].[ext]' },
-        },
-      ],
-    }
-    config.plugins[1].options = {
-      filename: 'docs-assets/css/styles.[chunkhash:8].css',
-      chunkFilename: 'docs-assets/css/[id].styles.[chunkhash:8].css',
+        ],
+      }
+      config.module.rules[5] = {
+        test: /\.(svg)(\?.*)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: { name: 'docs-assets/img/[name].[hash:8].[ext]', publicPath },
+          },
+        ],
+      }
+      config.plugins[1].options = {
+        filename: 'docs-assets/css/styles.[chunkhash:8].css',
+        chunkFilename: 'docs-assets/css/[id].styles.[chunkhash:8].css',
+        publicPath,
+      }
     }
   },
   chainWebpack: (webpackConfig, isServer) => {
     webpackConfig.when(process.env.NODE_ENV === 'production', config => {
       config.output.filename('docs-assets/js/[name].[chunkhash:8].js')
+      config.output.publicPath(publicPath)
     })
+
+    webpackConfig.resolve.alias.set('public', path.resolve(__dirname, './public'))
+
     webpackConfig.module
       .rule('compile')
       .test(/\.js$/)

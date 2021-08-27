@@ -233,7 +233,7 @@ div[class*='language-'].line-numbers-mode {
       margin: 0 12px;
       height: 36px;
       border-radius: 0;
-      background-image: url(/docs-images/search.png);
+      background-image: url(~public/docs-images/search.png);
       background-position: 0.6rem;
       border: none;
       transition: width 0.5s ease;
@@ -555,11 +555,11 @@ div[class*='language-'].line-numbers-mode {
         height: 15px;
       }
       &.improve-doc::before {
-        background: url(/docs-images/edit.png) no-repeat;
+        background: url(~public/docs-images/edit.png) no-repeat;
         background-size: contain;
       }
       &.feedback-doc::before {
-        background: url(/docs-images/feedback.png) no-repeat;
+        background: url(~public/docs-images/feedback.png) no-repeat;
         background-size: contain;
       }
     }
@@ -722,12 +722,12 @@ div[class*='language-'].line-numbers-mode {
       }
       a {
         display: inline-flex;
+        color: #9b9c9d;
+        .iconfont {
+          font-size: 22px;
+        }
         &:not(:last-child) {
           margin-right: 12px;
-        }
-        img {
-          width: 24px;
-          height: 24px;
         }
         &.wechat {
           .qr-code {

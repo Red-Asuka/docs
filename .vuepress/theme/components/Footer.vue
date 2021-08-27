@@ -11,7 +11,7 @@
                 class="dropdown-title"
                 @click.stop="changeLangFlag = !changeLangFlag"
               >
-                <img :src="$withBase('/docs-images/language.png')" />
+                <img src="~public/docs-images/language.png" />
                 <span class="title">
                   {{ $lang === 'zh-CN' ? '中文' : 'English' }}
                 </span>
@@ -75,11 +75,11 @@
               target="_blank"
               rel="noopener"
             >
-              <img :src="$withBase(followItem.img)" />
+              <i :class="`iconfont ${followItem.icon}`"></i>
             </a>
             <a class="wechat" v-if="$lang === 'zh-CN'" href="javascript:;">
-              <img :src="$withBase('/docs-images/wechat.png')" />
-              <img class="qr-code" src="https://static.emqx.net/docs-images/new-mails/qr_code.png" />
+              <i class="iconfont icon-wechat"></i>
+              <img class="qr-code" src="https://static.emqx.net/images/new-mails/qr_code.png" />
             </a>
           </div>
         </div>

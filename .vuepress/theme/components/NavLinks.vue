@@ -19,8 +19,9 @@
         href="https://github.com/hstreamdb/hstream/"
         target="_blank"
         rel="noopener"
+        style="display: inline-flex"
       >
-        <img :src="$withBase('/docs-images/github-black.png')" />
+        <i class="iconfont icon-github mr-1" style="font-size: 24px"></i>
         Star
       </a>
       <a
@@ -32,8 +33,9 @@
         "
         target="_blank"
         rel="noopener"
+        style="display: inline-flex"
       >
-        <img :src="$withBase('/docs-images/download.png')" />
+        <i class="iconfont icon-download mr-1" style="font-size: 24px; font-weight: 600"></i>
         {{ $lang === 'zh-CN' ? '下载' : 'Download' }}
       </a>
     </div>
